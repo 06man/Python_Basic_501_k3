@@ -10,6 +10,7 @@ import os
 
 # 폰트 경로 설정
 font_path = "C:/Windows/Fonts/NanumGothic.ttf"
+font_path= "C:/Windows/Fonts/malgun.ttf"  # '맑은 고딕' 폰트 경로
 font_prop = fm.FontProperties(fname=font_path)
 
 # Matplotlib 기본 폰트 설정
