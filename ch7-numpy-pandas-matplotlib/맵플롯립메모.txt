@@ -1,0 +1,273 @@
+1. Matplotlib 기본 문법
+Matplotlib은 에서 데이터 시각화를 위한 가장 기본적인 라이브러리 중 하나입니다. pyplot 모듈을 주로 사용하며, plt로 줄여서 사용합니다.
+
+기본 코드 구조
+
+
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+import os
+
+# 폰트 경로 설정
+font_path = "C:/Windows/Fonts/NanumGothic.ttf"
+font_prop = fm.FontProperties(fname=font_path)
+
+# Matplotlib 기본 폰트 설정
+plt.rc('font', family=font_prop.get_name())
+
+# 음수 기호 깨짐 방지
+plt.rcParams['axes.unicode_minus'] = False
+
+# 그래프 그리기
+plt.figure(figsize=(8, 5))
+plt.plot([1, 2, 3, 4], [10, 20, 25, 30], label="라인 그래프")
+plt.xlabel("X축 이름", fontproperties=font_prop)
+plt.ylabel("Y축 이름", fontproperties=font_prop)
+plt.title("그래프 제목", fontproperties=font_prop)
+plt.legend(prop=font_prop)
+plt.grid(True)
+plt.show()
+
+
+
+
+
+
+2. Matplotlib 주요 그래프 종류 및 사용 예제
+
+
+① 라인 그래프 (Line Plot)
+데이터의 추세를 확인하는 데 유용합니다.
+
+import matplotlib.pyplot as plt
+
+# 1. 라인 그래프
+x = [1, 2, 3, 4, 5]
+y = [10, 20, 25, 30, 40]
+plt.figure(figsize=(8, 5))
+plt.plot(x, y, marker='o', linestyle='-', color='b', label="데이터 변화")
+plt.xlabel("시간", fontproperties=font_prop)
+plt.ylabel("값", fontproperties=font_prop)
+plt.title("라인 그래프 예제", fontproperties=font_prop)
+plt.legend(prop=font_prop)
+plt.grid(True)
+plt.show()
+
+주요 옵션
+
+📌 추가 옵션
+
+linewidth=2 → 선 두께 조절
+alpha=0.8 → 선 투명도 조절
+markerfacecolor='yellow' → 마커 내부 색상
+markeredgecolor='black' → 마커 테두리 색상
+markersize=8 → 마커 크기 조절
+linestyle='--' → 점선 스타일 설정 ('--', '-.', ':')
+xlim([xmin, xmax]) → X축 범위 설정
+ylim([ymin, ymax]) → Y축 범위 설정
+grid(axis='y', linestyle='--', alpha=0.5) → Y축에만 점선 그리드 추가
+plt.fill_between(x, y, color='lightblue', alpha=0.3) → 선 아래 영역 색상 채우기
+
+marker='o' → 데이터 포인트를 원형으로 표시
+linestyle='-' → 선 스타일 설정 (--, -., : 등 가능)
+color='b' → 선 색상 설정 (예: r(빨강), g(초록), b(파랑), k(검정))
+
+
+② 막대 그래프 (Bar Chart)
+카테고리별 비교를 할 때 유용합니다.
+
+# 2. 막대 그래프
+x = ["A", "B", "C", "D"]
+y = [10, 15, 7, 12]
+plt.figure(figsize=(8, 5))
+plt.bar(x, y, color=['red', 'blue', 'green', 'purple'], alpha=0.7)
+plt.xlabel("카테고리", fontproperties=font_prop)
+plt.ylabel("값", fontproperties=font_prop)
+plt.title("막대 그래프 예제", fontproperties=font_prop)
+plt.show()
+
+주요 옵션
+
+color=['red', 'blue'] → 막대 색상 설정
+alpha=0.7 → 투명도 조절 (0~1)
+
+📌 추가 옵션
+
+edgecolor='black' → 막대 테두리 색상
+hatch='/' → 막대 내부 패턴 ('/', '\\', '-', 'x')
+width=0.5 → 막대 너비 조절
+plt.xticks(rotation=45) → X축 레이블 회전
+log=True → 로그 스케일 적용
+bottom=5 → 막대의 시작 위치 변경
+plt.barh(x, y, color='green') → 가로 막대 그래프 (bar() → barh())
+plt.axhline(y=10, color='r', linestyle='--') → 특정 y값에 기준선 추가
+plt.text(x, y, '값', ha='center', va='bottom') → 막대 위에 값 추가
+plt.bar(x, y, alpha=0.5, label='데이터') → 투명도 조절 후 범례 추가
+
+
+③ 히스토그램 (Histogram)
+데이터의 분포를 확인하는 데 사용됩니다.
+
+import numpy as np
+
+# 3. 히스토그램
+data = np.random.randn(1000)
+plt.figure(figsize=(8, 5))
+plt.hist(data, bins=20, color="blue", alpha=0.7, edgecolor="black")
+plt.xlabel("값 범위", fontproperties=font_prop)
+plt.ylabel("빈도수", fontproperties=font_prop)
+plt.title("히스토그램 예제", fontproperties=font_prop)
+plt.show()
+
+주요 옵션
+
+bins=20 → 구간 개수 설정
+edgecolor="black" → 막대 테두리 색상
+
+📌 추가 옵션
+
+density=True → 확률 밀도 함수로 변환
+cumulative=True → 누적 분포 표시
+log=True → Y축 로그 스케일 적용
+rwidth=0.9 → 막대 간 간격 조절
+plt.axvline(x=np.mean(data), color='r', linestyle='--') → 평균선 추가
+plt.axvline(x=np.median(data), color='g', linestyle='-.') → 중앙값 표시
+plt.xticks(range(-3, 4)) → X축 범주 설정
+plt.grid(axis='y', linestyle='--', alpha=0.5) → Y축에만 점선 그리드 추가
+plt.hist(data, bins=30, histtype='step', color='black') → 윤곽선 스타일 히스토그램
+plt.fill_between(hist_x, hist_y, color='blue', alpha=0.3) → 영역 색상 채우기
+④ 산점
+
+④ 산점도 (Scatter Plot)
+두 변수 간의 관계를 시각화할 때 사용됩니다.
+
+# 4. 산점도
+x = np.random.rand(50)
+y = np.random.rand(50)
+plt.figure(figsize=(8, 5))
+plt.scatter(x, y, color="red", alpha=0.7)
+plt.xlabel("X 값", fontproperties=font_prop)
+plt.ylabel("Y 값", fontproperties=font_prop)
+plt.title("산점도 예제", fontproperties=font_prop)
+plt.grid(True)
+plt.show()
+
+주요 옵션
+
+alpha=0.7 → 투명도 조절
+color="red" → 점 색상 지정
+
+📌 추가 옵션
+
+s=100 → 점 크기 조절
+c=np.random.rand(50) → 점 색상을 값에 따라 다르게 설정
+cmap='viridis' → 컬러맵 설정 ('coolwarm', 'plasma', 'cividis')
+edgecolors='black' → 점 테두리 색상 지정
+linewidths=0.5 → 점 테두리 두께 조절
+alpha=0.6 → 점 투명도 조절
+plt.colorbar() → 컬러 바 추가 (값이 색으로 표현될 경우)
+plt.xscale('log') → X축 로그 스케일 적용
+plt.scatter(x, y, marker='^') → 마커 스타일 변경 ('o', '^', 's', 'd')
+plt.axhline(y=0.5, color='r', linestyle='--') → 특정 y값 기준선 추가
+
+
+⑤ 원형 그래프 (Pie Chart)
+비율을 나타낼 때 유용합니다.
+
+# 5. 원형 그래프
+labels = ["A", "B", "C", "D"]
+sizes = [40, 30, 20, 10]
+plt.figure(figsize=(7, 7))
+plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140, colors=['blue', 'red', 'green', 'purple'])
+plt.title("원형 그래프 예제", fontproperties=font_prop)
+plt.show()
+
+주요 옵션
+
+autopct='%1.1f%%' → 퍼센트 표시
+startangle=140 → 시작 각도 지정
+
+📌 추가 옵션
+
+explode=[0, 0.1, 0, 0] → 특정 조각 강조
+shadow=True → 그림자 효과 추가
+colors=['gold', 'lightcoral', 'lightskyblue', 'lightgreen'] → 색상 지정
+startangle=90 → 시작 각도 변경
+wedgeprops={'edgecolor': 'black', 'linewidth': 1.5} → 테두리 색 및 두께 조절
+plt.pie(sizes, counterclock=False) → 시계 반대 방향으로 그리기
+plt.pie(sizes, autopct=lambda p: '{:.0f}'.format(p * sum(sizes) / 100)) → 실제 값 표시
+plt.legend(loc='upper right') → 범례 위치 설정
+plt.pie(sizes, labels=labels, pctdistance=0.85) → 퍼센트 값 중앙 정렬
+plt.gca().set_aspect('equal') → 정원 형태 유지
+
+
+
+⑥ 히트맵 (Heatmap)
+데이터 행렬을 시각화할 때 사용됩니다.
+
+# 6. 히트맵
+import seaborn as sns
+data = np.random.rand(5, 5)
+plt.figure(figsize=(8, 6))
+sns.heatmap(data, annot=True, cmap="coolwarm")
+plt.title("히트맵 예제", fontproperties=font_prop)
+plt.show()
+
+
+주요 옵션
+
+annot=True → 각 셀에 값 표시
+cmap="coolwarm" → 색상 테마 변경
+
+📌 추가 옵션
+
+linewidths=0.5 → 셀 간 경계선 설정
+linecolor='black' → 경계선 색상 지정
+cbar_kws={'shrink': 0.8} → 컬러바 크기 조절
+annot_kws={'size': 12} → 텍스트 크기 조절
+xticklabels=['A', 'B', 'C', 'D', 'E'] → X축 레이블 변경
+yticklabels=['V1', 'V2', 'V3', 'V4', 'V5'] → Y축 레이블 변경
+mask=np.triu(np.ones_like(data, dtype=bool)) → 상삼각형 마스킹
+center=0 → 중심값 설정 (0을 기준으로 색상 표현)
+cmap='coolwarm' → 색상 테마 변경
+plt.xticks(rotation=45) → X축 레이블 회전
+
+
+3. 실무에서 자주 쓰이는 그래프 조합
+① 여러 그래프를 하나의 Figure에 표시
+
+# 7. 여러 그래프 한 Figure에 표시
+
+# 그래프 생성
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+# 막대 그래프
+axes[0].bar(["A", "B", "C"], [10, 20, 30], color="skyblue")
+axes[0].set_title("막대 그래프", fontproperties=font_prop)
+axes[0].set_xlabel("카테고리", fontproperties=font_prop)
+axes[0].set_ylabel("값", fontproperties=font_prop)
+
+# 산점도
+axes[1].scatter(np.random.rand(50), np.random.rand(50), color="red")
+axes[1].set_title("산점도", fontproperties=font_prop)
+axes[1].set_xlabel("X 축", fontproperties=font_prop)
+axes[1].set_ylabel("Y 축", fontproperties=font_prop)
+
+# 그래프 출력
+plt.show()
+
+
+② 시계열 데이터 분석 (이동 평균선 추가)
+
+# 8. 시계열 데이터 분석
+import numpy as np
+import pandas as pd
+data = np.cumsum(np.random.randn(100))
+window = 10
+rolling_mean = pd.Series(data).rolling(window=window).mean()
+plt.figure(figsize=(10, 5))
+plt.plot(data, label="원본 데이터", alpha=0.5)
+plt.plot(rolling_mean, label=f"{window}일 이동 평균", color="red")
+plt.legend(prop=font_prop)
+plt.title("시계열 데이터 분석", fontproperties=font_prop)
+plt.show()
